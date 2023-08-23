@@ -1,0 +1,21 @@
+<c8y-title>{{ 'Favorites' | translate }}</c8y-title>
+<div class="card">
+  <div class="content-fullpage d-flex d-col">
+    <c8y-data-grid
+      [title]="'Favorites' | translate"
+      [columns]="COLUMNS"
+      [rows]="managedObjects"
+      [pagination]="PAGINATION"
+      [actionControls]="[]"
+      (onReload)="onReload()"
+      class="flex-grow col-xs-12 no-gutter"
+    >
+      <c8y-ui-empty-state
+        icon="mark-as-favorite"
+        [horizontal]="true"
+        [title]="'No favorites to display.' | translate"
+        class="d-block"
+      ></c8y-ui-empty-state>
+    </c8y-data-grid>
+  </div>
+</div>
