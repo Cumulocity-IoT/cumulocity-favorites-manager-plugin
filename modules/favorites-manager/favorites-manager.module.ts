@@ -1,14 +1,16 @@
 import { NgModule } from '@angular/core';
 
 import { FavoritesManagerComponent } from './favorites-manager.component';
-import { CoreModule, HOOK_NAVIGATOR_NODES, HOOK_ROUTE } from '@c8y/ngx-components';
+import { CoreModule, HOOK_ACTION_BAR, HOOK_NAVIGATOR_NODES, HOOK_ROUTE } from '@c8y/ngx-components';
 import { FavoritesManagerNavigationFactory } from './favorites-manager.factory';
 import { FavoritesManagerService } from './favorites-manager.service';
+import { FavoritesActionComponent } from './favorites-action.component';
+import { FavoritesActionFactory } from './favorites-action.factory';
 
 @NgModule({
   imports: [CoreModule],
-  exports: [FavoritesManagerComponent],
-  declarations: [FavoritesManagerComponent],
+  exports: [FavoritesManagerComponent, FavoritesActionComponent],
+  declarations: [FavoritesManagerComponent, FavoritesActionComponent],
   providers: [
     FavoritesManagerService,
     {
@@ -22,6 +24,11 @@ import { FavoritesManagerService } from './favorites-manager.service';
         path: 'favorites',
         component: FavoritesManagerComponent,
       },
+      multi: true,
+    },
+    {
+      provide: HOOK_ACTION_BAR,
+      useClass: FavoritesActionFactory,
       multi: true,
     },
   ],

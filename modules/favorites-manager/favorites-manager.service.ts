@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { InventoryService, UserService } from '@c8y/ngx-components/api';
 import { IUserCustomerProperties } from './favorites-manager.model';
 import { IManagedObject } from '@c8y/client';
+import { isEmpty } from 'lodash';
 
 @Injectable()
 export class FavoritesManagerService {
@@ -47,6 +48,54 @@ export class FavoritesManagerService {
       console.error('Failed to load favorites for current user: ', error);
 
       return undefined;
+    }
+  }
+
+  async getFavoriteStatus(managedObjectId: string): Promise<boolean> {
+    try {
+      const favorites = await this.getFavoritesForCurrentUser();
+
+      if (isEmpty(favorites)) {
+        return false;
+      }
+
+      return favorites.findIndex((favorite) => favorite === managedObjectId) !== -1;
+    } catch (error) {
+      console.error('Failed to get favorite status: ', error);
+    }
+  }
+
+  async addToFavorites(managedObjectId: string): Promise<void> {
+    try {
+      const user = (await this.userService.current()).data;
+      const customProperties = user.customProperties as IUserCustomerProperties;
+
+      customProperties.favorites
+        ? customProperties.favorites.push(managedObjectId)
+        : (customProperties.favorites = [managedObjectId]);
+
+      this.userService.updateCurrent(user);
+    } catch (error) {
+      console.error('Failed to add object to favorites: ', error);
+    }
+  }
+
+  async removeFromFavorites(managedObjectId: string): Promise<void> {
+    try {
+      const user = (await this.userService.current()).data;
+      const customProperties = user.customProperties as IUserCustomerProperties;
+
+      if (isEmpty(customProperties.favorites)) {
+        return;
+      }
+
+      customProperties.favorites.splice(
+        customProperties.favorites.findIndex((favoriteId) => favoriteId === managedObjectId)
+      );
+
+      this.userService.updateCurrent(user);
+    } catch (error) {
+      console.error('Failed to add object to favorites: ', error);
     }
   }
 }
