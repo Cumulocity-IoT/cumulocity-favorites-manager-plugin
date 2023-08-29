@@ -4,10 +4,9 @@
     <c8y-data-grid
       [title]="'Favorites' | translate"
       [columns]="COLUMNS"
-      [rows]="managedObjects"
+      [serverSideDataCallback]="favoritesManagerService.serverSideDataCallback"
       [pagination]="PAGINATION"
       [actionControls]="[]"
-      (onReload)="onReload()"
       class="flex-grow col-xs-12 no-gutter"
     >
       <c8y-ui-empty-state

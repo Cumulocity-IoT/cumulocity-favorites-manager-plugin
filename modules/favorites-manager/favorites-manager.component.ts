@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FavoritesManagerService } from './favorites-manager.service';
 import { IManagedObject } from '@c8y/client';
 import { Column, Pagination } from '@c8y/ngx-components';
+import { AlarmsDeviceGridColumn, NameDeviceGridColumn } from '@c8y/ngx-components/device-grid';
 
 @Component({
   selector: 'c8y-favorites-manager',
@@ -19,32 +20,17 @@ export class FavoritesManagerComponent implements OnInit {
       header: 'ID',
       path: 'id',
       sortable: true,
-      gridTrackSize: '60px',
+      gridTrackSize: '120px',
     },
-    {
-      name: 'name',
-      path: 'name',
-      header: 'Name',
-      sortable: true,
-      filterable: true,
-    },
+    new NameDeviceGridColumn(),
+    new AlarmsDeviceGridColumn(),
   ];
 
   managedObjects: IManagedObject[] = [];
 
-  constructor(private favoritesManagerService: FavoritesManagerService) {}
+  constructor(protected favoritesManagerService: FavoritesManagerService) {}
 
   async ngOnInit() {
-    this.loadFavorites();
-  }
-
-  onReload() {
-    this.loadFavorites();
-  }
-
-  private async loadFavorites(): Promise<void> {
-    this.managedObjects = await this.favoritesManagerService.getFavoredManagedObjects();
-
-    console.log('managed objects: ', this.managedObjects);
+    this.favoritesManagerService.initFavorites();
   }
 }

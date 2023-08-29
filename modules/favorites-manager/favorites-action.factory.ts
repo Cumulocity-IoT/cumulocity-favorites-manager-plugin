@@ -22,6 +22,7 @@ export class FavoritesActionFactory implements ActionBarFactory {
 
     console.log('activatedRoute: ', activatedRoute);
 
-    return this.FAVORITES_ACTION;
+    // return this.FAVORITES_ACTION;
+    return undefined;
   }
 }
