@@ -79,10 +79,7 @@ export class BaseInventoryDatasourceService {
       }
 
       if (column.externalFilterQuery && column.filteringConfig) {
-        json.__filter = {
-          ...json.__filter,
-          ...column.filteringConfig.getFilter(column.externalFilterQuery),
-        };
+        json.__filter.__and.push(column.filteringConfig.getFilter(column.externalFilterQuery));
       }
     }
 

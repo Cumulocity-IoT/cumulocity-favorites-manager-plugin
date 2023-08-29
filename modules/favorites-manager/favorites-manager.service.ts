@@ -31,7 +31,7 @@ export class FavoritesManagerService {
   ];
 
   private BASE_QUERY = {
-    __or: [],
+    __and: [],
   };
 
   serverSideDataCallback: Promise<ServerSideDataResult>;
@@ -49,8 +49,10 @@ export class FavoritesManagerService {
       return;
     }
 
-    this.BASE_QUERY.__or = favorites.map((favorite) => {
-      return { __eq: { id: favorite } };
+    this.BASE_QUERY.__and.push({
+      __or: favorites.map((favorite) => {
+        return { __eq: { id: favorite } };
+      }),
     });
 
     this.serverSideDataCallback = this.onDataSourceModifier.bind(this);
