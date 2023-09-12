@@ -11,6 +11,15 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
+msgid "favorites.title"
+msgstr "Favorites"
+
+msgid "favorites.grid.title"
+msgstr "Favorites"
+
+msgid "favorites.grid.empty-state"
+msgstr "No favorites to display."
+
 msgid "favorites.action.remove"
 msgstr "Remove from favorites"
 

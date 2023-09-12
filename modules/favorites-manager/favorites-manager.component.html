@@ -1,8 +1,8 @@
-<c8y-title>{{ 'Favorites' | translate }}</c8y-title>
+<c8y-title>{{ 'favorites.title' | translate }}</c8y-title>
 <div class="card">
   <div class="content-fullpage d-flex d-col">
     <c8y-data-grid
-      [title]="'Favorites' | translate"
+      [title]="'favorites.grid.title' | translate"
       [columns]="COLUMNS"
       [serverSideDataCallback]="favoritesManagerService.serverSideDataCallback"
       [pagination]="PAGINATION"
@@ -12,7 +12,7 @@
       <c8y-ui-empty-state
         icon="mark-as-favorite"
         [horizontal]="true"
-        [title]="'No favorites to display.' | translate"
+        [title]="'favorites.grid.empty-state' | translate"
         class="d-block"
       ></c8y-ui-empty-state>
     </c8y-data-grid>
