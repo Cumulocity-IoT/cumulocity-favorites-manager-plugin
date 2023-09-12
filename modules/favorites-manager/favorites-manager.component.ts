@@ -2,7 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { FavoritesManagerService } from './favorites-manager.service';
 import { IManagedObject } from '@c8y/client';
 import { Column, Pagination } from '@c8y/ngx-components';
-import { AlarmsDeviceGridColumn, NameDeviceGridColumn } from '@c8y/ngx-components/device-grid';
+import {
+  AlarmsDeviceGridColumn,
+  NameDeviceGridColumn,
+  SystemIdDeviceGridColumn,
+} from '@c8y/ngx-components/device-grid';
+import { StatusExtendedDeviceGridColumn } from './columns/status-extended.device-grid-column';
 
 @Component({
   selector: 'c8y-favorites-manager',
@@ -15,14 +20,9 @@ export class FavoritesManagerComponent implements OnInit {
   };
 
   readonly COLUMNS: Column[] = [
-    {
-      name: 'id',
-      header: 'ID',
-      path: 'id',
-      sortable: true,
-      gridTrackSize: '120px',
-    },
+    new StatusExtendedDeviceGridColumn(),
     new NameDeviceGridColumn(),
+    new SystemIdDeviceGridColumn(),
     new AlarmsDeviceGridColumn(),
   ];
 

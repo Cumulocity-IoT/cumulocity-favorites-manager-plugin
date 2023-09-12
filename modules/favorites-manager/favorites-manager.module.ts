@@ -6,11 +6,17 @@ import { FavoritesManagerNavigationFactory } from './favorites-manager.factory';
 import { FavoritesManagerService } from './favorites-manager.service';
 import { FavoritesActionComponent } from './favorites-action.component';
 import { FavoritesActionFactory } from './favorites-action.factory';
+import { StatusExtendedCellRendererComponent } from './columns/status-extended.cell-renderer.component';
 
 @NgModule({
   imports: [CoreModule],
   exports: [FavoritesManagerComponent, FavoritesActionComponent],
-  declarations: [FavoritesManagerComponent, FavoritesActionComponent],
+  declarations: [
+    FavoritesManagerComponent,
+    FavoritesActionComponent,
+    StatusExtendedCellRendererComponent,
+  ],
+  entryComponents: [StatusExtendedCellRendererComponent],
   providers: [
     FavoritesManagerService,
     {
