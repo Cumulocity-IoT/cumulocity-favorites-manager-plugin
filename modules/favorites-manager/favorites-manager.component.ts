@@ -12,6 +12,7 @@ import { StatusExtendedDeviceGridColumn } from './columns/status-extended.device
 @Component({
   selector: 'c8y-favorites-manager',
   templateUrl: 'favorites-manager.component.html',
+  providers: [FavoritesManagerService]
 })
 export class FavoritesManagerComponent implements OnInit {
   readonly PAGINATION: Pagination = {
