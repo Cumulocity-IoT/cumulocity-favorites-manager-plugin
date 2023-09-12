@@ -30,8 +30,6 @@ export class FavoritesActionComponent implements OnInit {
   }
 
   private initContext(): void {
-    console.log('activatedRoute: ', this.activatedRoute);
-
     this.contextId = (
       (this.activatedRoute.snapshot.parent?.data ||
         this.activatedRoute.snapshot.firstChild?.data) as {

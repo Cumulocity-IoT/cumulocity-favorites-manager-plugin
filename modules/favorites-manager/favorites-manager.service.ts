@@ -61,7 +61,6 @@ export class FavoritesManagerService {
   async onDataSourceModifier(
     dataSourceModifier: DataSourceModifier
   ): Promise<ServerSideDataResult> {
-    console.log('on grid load');
     return this.inventoryDatasource.reload(dataSourceModifier, this.BASE_QUERY);
   }
 
