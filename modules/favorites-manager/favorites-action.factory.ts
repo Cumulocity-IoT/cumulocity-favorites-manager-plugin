@@ -19,7 +19,7 @@ export class FavoritesActionFactory implements ActionBarFactory {
       return undefined;
     }
 
-    const managedObject = activatedRoute.parent.snapshot.data.contextData as IManagedObjectExtended;
+    const managedObject = activatedRoute.parent?.snapshot?.data.contextData as IManagedObjectExtended;
 
     if (
       !managedObject ||
