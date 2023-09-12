@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { ActionBarFactory, ActionBarItem } from '@c8y/ngx-components';
 import { FavoritesActionComponent } from './favorites-action.component';
+import { IManagedObjectExtended } from './favorites-manager.model';
 
 @Injectable()
 export class FavoritesActionFactory implements ActionBarFactory {
@@ -14,15 +15,21 @@ export class FavoritesActionFactory implements ActionBarFactory {
   constructor() {}
 
   async get(activatedRoute?: ActivatedRoute) {
-    console.log('call get');
-
-    if (!activatedRoute || !activatedRoute.parent) {
-      return [];
+    if (!activatedRoute) {
+      return undefined;
     }
 
-    console.log('activatedRoute: ', activatedRoute);
+    const managedObject = activatedRoute.parent.snapshot.data.contextData as IManagedObjectExtended;
 
-    // return this.FAVORITES_ACTION;
-    return undefined;
+    if (
+      !managedObject ||
+      (!managedObject.c8y_IsDevice &&
+        !managedObject.c8y_IsAsset &&
+        !managedObject.c8y_IsDeviceGroup)
+    ) {
+      return undefined;
+    }
+
+    return this.FAVORITES_ACTION;
   }
 }
