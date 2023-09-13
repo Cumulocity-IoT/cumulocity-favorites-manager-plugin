@@ -6,6 +6,7 @@ import { FavoritesManagerNavigationFactory } from './favorites-manager.factory';
 import { FavoritesActionComponent } from './favorites-action.component';
 import { FavoritesActionFactory } from './favorites-action.factory';
 import { StatusExtendedCellRendererComponent } from './columns/status-extended.cell-renderer.component';
+import { ObjectTypeCellRendererComponent } from './columns/object-type.cell-renderer.component';
 
 @NgModule({
   imports: [CoreModule],
@@ -13,9 +14,10 @@ import { StatusExtendedCellRendererComponent } from './columns/status-extended.c
   declarations: [
     FavoritesManagerComponent,
     FavoritesActionComponent,
+    ObjectTypeCellRendererComponent,
     StatusExtendedCellRendererComponent,
   ],
-  entryComponents: [StatusExtendedCellRendererComponent],
+  entryComponents: [ObjectTypeCellRendererComponent, StatusExtendedCellRendererComponent],
   providers: [
     {
       provide: HOOK_NAVIGATOR_NODES,

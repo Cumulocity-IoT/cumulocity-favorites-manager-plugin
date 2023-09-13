@@ -25,3 +25,9 @@ msgstr "Remove from favorites"
 
 msgid "favorites.action.add"
 msgstr "Add to favorites"
+
+msgid "filter.object-type.title"
+msgstr "Object Type"
+
+msgid "filter.object-type.hint"
+msgstr "Show objects with type:"

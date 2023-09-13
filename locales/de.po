@@ -25,3 +25,9 @@ msgstr "Von Favoriten entfernen"
 
 msgid "favorites.action.add"
 msgstr "Als Favorit hinzufügen"
+
+msgid "filter.object-type.title"
+msgstr "Objekttyp"
+
+msgid "filter.object-type.hint"
+msgstr "Zeige Objekte vom Typen:"
