@@ -9,6 +9,7 @@ import {
 } from '@c8y/ngx-components/device-grid';
 import { StatusExtendedDeviceGridColumn } from './columns/status-extended.device-grid-column';
 import { ObjectTypeColumn } from './columns/object-type.grid-column';
+import { TypeColumn } from './columns/type.grid-column';
 
 @Component({
   selector: 'c8y-favorites-manager',
@@ -25,6 +26,7 @@ export class FavoritesManagerComponent implements OnInit {
     new StatusExtendedDeviceGridColumn(),
     new NameDeviceGridColumn(),
     new SystemIdDeviceGridColumn(),
+    new TypeColumn(),
     new AlarmsDeviceGridColumn(),
     new ObjectTypeColumn(),
   ];

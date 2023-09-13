@@ -7,6 +7,7 @@ import { FavoritesActionComponent } from './favorites-action.component';
 import { FavoritesActionFactory } from './favorites-action.factory';
 import { StatusExtendedCellRendererComponent } from './columns/status-extended.cell-renderer.component';
 import { ObjectTypeCellRendererComponent } from './columns/object-type.cell-renderer.component';
+import { TypeCellRendererComponent } from './columns/type.cell-renderer.component';
 
 @NgModule({
   imports: [CoreModule],
@@ -16,8 +17,13 @@ import { ObjectTypeCellRendererComponent } from './columns/object-type.cell-rend
     FavoritesActionComponent,
     ObjectTypeCellRendererComponent,
     StatusExtendedCellRendererComponent,
+    TypeCellRendererComponent,
   ],
-  entryComponents: [ObjectTypeCellRendererComponent, StatusExtendedCellRendererComponent],
+  entryComponents: [
+    ObjectTypeCellRendererComponent,
+    StatusExtendedCellRendererComponent,
+    TypeCellRendererComponent,
+  ],
   providers: [
     {
       provide: HOOK_NAVIGATOR_NODES,
