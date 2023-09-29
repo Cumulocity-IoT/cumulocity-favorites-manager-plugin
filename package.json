@@ -1,9 +1,9 @@
 {
   "name": "favorites-manager-plugin",
-  "version": "1017.0.289",
-  "description": "This is the Cumulocity module federation plugin. Plugins can be developed like any Cumulocity application, but can be used at runtime by other applications. Therefore, they export an Angular module which can then be imported by any other application. The exports are defined in `package.json`:",
+  "version": "1.0.0",
+  "description": "Manage your favorite assets and devices using the Favorites Manager. Add favored assets and devices to your favorites list to quickly access them.",
   "scripts": {
-    "start": "c8ycli server -u {{BASE_URL}} --shell cockpit",
+    "start": "c8ycli server -u {{C8Y_URL}} --shell cockpit",
     "build": "c8ycli build",
     "deploy": "c8ycli deploy",
     "postinstall": "ngcc"
@@ -45,7 +45,7 @@
   "c8y": {
     "application": {
       "name": "Favorites Manager",
-      "description": "Mark any asset or device as a favorite to quickly access those in your personal favorites list",
+      "description": "Mark any asset or device as a favorite to quickly access these in your personal favorites list",
       "contextPath": "sag-ps-iot-pkg-favorites-manager-plugin",
       "key": "sag-ps-iot-pkg-favorites-manager-plugin-key",
       "globalTitle": "Favorites Manager",
@@ -58,7 +58,7 @@
           "name": "Favorites Manager",
           "module": "FavoritesManagerModule",
           "path": "./modules/favorites-manager/favorites-manager.module.ts",
-          "description": "Mark any asset or device as a favorite to quickly access those in your personal favorites list"
+          "description": "Mark any asset or device as a favorite to quickly access these in your personal favorites list"
         }
       ],
       "remotes": {
