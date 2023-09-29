@@ -8,9 +8,18 @@
     "deploy": "c8ycli deploy",
     "postinstall": "ngcc"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": [
+    "Cumulocity",
+    "Plugin",
+    "Favorites",
+    "Bookmarks",
+    "Watchlist"
+  ],
+  "author": "Software AG",
   "license": "ISC",
+  "repository": {
+    "url": "https://github.com/SoftwareAG/cumulocity-favorites-manager-plugin"
+  },
   "dependencies": {
     "@angular/animations": "14.0.6",
     "@angular/cdk": "14.1.2",
