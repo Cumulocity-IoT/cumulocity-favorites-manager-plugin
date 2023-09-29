@@ -8,28 +8,6 @@ import { InventoryDatasourceService } from '../services/inventory-datasource.ser
 
 @Injectable()
 export class FavoritesManagerService {
-  readonly PAGINATION: Pagination = {
-    pageSize: 50,
-    currentPage: 1,
-  };
-
-  readonly COLUMNS: Column[] = [
-    {
-      name: 'id',
-      header: 'ID',
-      path: 'id',
-      sortable: true,
-      gridTrackSize: '60px',
-    },
-    {
-      name: 'name',
-      path: 'name',
-      header: 'Name',
-      sortable: true,
-      filterable: true,
-    },
-  ];
-
   private BASE_QUERY = {
     __and: [],
   };
