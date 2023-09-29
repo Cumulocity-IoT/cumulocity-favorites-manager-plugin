@@ -28,11 +28,11 @@ export class InventoryDatasourceService extends BaseInventoryDatasourceService {
     const total = this.fetchManagedObjectsCount(allQuery);
     const [managedObjects, filteredSize, size] = await Promise.all([mosForPage, filtered, total]);
 
-    const result: ServerSideDataResult = {
+    const result = {
       size,
       filteredSize,
       ...managedObjects,
-    };
+    } as unknown as ServerSideDataResult;
 
     return result;
   }
@@ -43,7 +43,7 @@ export class InventoryDatasourceService extends BaseInventoryDatasourceService {
     const customColumns: Column[] = columns.filter(
       (column) => column.sortingConfig && !isEmpty(column.sortingConfig?.pathSortingConfigs)
     );
-    
+
     for (const c of customColumns) {
       const sortOrder = c.sortOrder === 'asc' ? 1 : -1;
       for (const config of c.sortingConfig.pathSortingConfigs) {
