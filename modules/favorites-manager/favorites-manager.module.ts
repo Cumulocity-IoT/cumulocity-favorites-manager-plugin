@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
-
 import { FavoritesManagerComponent } from './favorites-manager.component';
-import { CoreModule, HOOK_ACTION_BAR, HOOK_NAVIGATOR_NODES, HOOK_ROUTE } from '@c8y/ngx-components';
+import { CoreModule, hookActionBar, hookNavigator, hookRoute } from '@c8y/ngx-components';
 import { FavoritesManagerNavigationFactory } from './favorites-manager.factory';
 import { FavoritesActionComponent } from './favorites-action.component';
 import { FavoritesActionFactory } from './favorites-action.factory';
@@ -25,24 +24,12 @@ import { TypeCellRendererComponent } from './columns/type.cell-renderer.componen
     TypeCellRendererComponent,
   ],
   providers: [
-    {
-      provide: HOOK_NAVIGATOR_NODES,
-      useClass: FavoritesManagerNavigationFactory,
-      multi: true,
-    },
-    {
-      provide: HOOK_ROUTE,
-      useValue: {
-        path: 'favorites',
-        component: FavoritesManagerComponent,
-      },
-      multi: true,
-    },
-    {
-      provide: HOOK_ACTION_BAR,
-      useClass: FavoritesActionFactory,
-      multi: true,
-    },
+    hookNavigator(FavoritesManagerNavigationFactory),
+    hookRoute({
+      path: 'favorites',
+      component: FavoritesManagerComponent,
+    }),
+    hookActionBar(FavoritesActionFactory),
   ],
 })
 export class FavoritesManagerModule {}

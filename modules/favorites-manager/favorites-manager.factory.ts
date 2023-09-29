@@ -10,7 +10,7 @@ export class FavoritesManagerNavigationFactory implements NavigatorNodeFactory {
     label: this.translateService.instant('favorites.title'),
     path: '/favorites',
     icon: 'mark-as-favorite',
-    priority: 5,
+    priority: 2000,
   });
 
   get() {
