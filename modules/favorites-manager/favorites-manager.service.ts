@@ -15,7 +15,6 @@ export class FavoritesManagerService {
   serverSideDataCallback: Promise<ServerSideDataResult>;
 
   constructor(
-    private inventoryService: InventoryService,
     private userService: UserService,
     private inventoryDatasource: InventoryDatasourceService
   ) {}
@@ -40,32 +39,6 @@ export class FavoritesManagerService {
     dataSourceModifier: DataSourceModifier
   ): Promise<ServerSideDataResult> {
     return this.inventoryDatasource.reload(dataSourceModifier, this.BASE_QUERY);
-  }
-
-  async getFavoredManagedObjects(): Promise<IManagedObject[]> {
-    try {
-      const managedObjectIds = await this.getFavoritesForCurrentUser();
-
-      if (!managedObjectIds || managedObjectIds.length === 0) {
-        return [];
-      }
-
-      const query = {
-        __or: managedObjectIds.map((managedObjectId) => {
-          return {
-            __eq: {
-              id: managedObjectId,
-            },
-          };
-        }),
-      };
-
-      return (await this.inventoryService.listQuery(query, { pageSize: 2000 })).data;
-    } catch (error) {
-      console.error('Failed to load favored managed objects for current user: ', error);
-
-      return [];
-    }
   }
 
   async getFavoriteStatus(managedObjectId: string): Promise<boolean> {
@@ -107,7 +80,8 @@ export class FavoritesManagerService {
       }
 
       customProperties.favorites.splice(
-        customProperties.favorites.findIndex((favoriteId) => favoriteId === managedObjectId)
+        customProperties.favorites.findIndex((favoriteId) => favoriteId === managedObjectId),
+        1
       );
 
       this.userService.updateCurrent(user);
