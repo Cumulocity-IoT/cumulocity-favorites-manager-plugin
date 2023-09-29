@@ -4,7 +4,7 @@
 
 Access your favorite assets quickly by them to the your personal favorites list. You can mark any device, group or Digital Twin Manager asset as your favorite. No special permissions are needed to use this plugin, as the list of favorites is managed per account in the [currentUser](https://cumulocity.com/api/core/#tag/Current-User) object. Therefore, favorites are independent of individual sessions and the browser being used for a session.
 
-> **Important:** This Favorites Manager plugin will not work for users, which are managed via SSO (e.g. Azure Active Directory). The corresponding user object of these SSO users is immutable and can't be updated. File an [issue](https://github.com/SoftwareAG/cumulocity-favorites-manager-plugin/issues) if you require this plugin for SSO users. 
+**Important:** This Favorites Manager plugin will not work for users, which are managed via SSO (e.g. Azure Active Directory). The corresponding user object of these SSO users is immutable and can't be updated. File an [issue](https://github.com/SoftwareAG/cumulocity-favorites-manager-plugin/issues) if you require this plugin for SSO users.
 
 ![alt manage favorites](/assets/favorites-manager-01.gif)
 
