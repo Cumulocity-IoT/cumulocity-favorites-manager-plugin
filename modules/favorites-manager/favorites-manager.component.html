@@ -8,12 +8,14 @@
       [pagination]="PAGINATION"
       [actionControls]="[]"
       class="flex-grow col-xs-12 no-gutter"
+      data-cy="favorites-list"
     >
       <c8y-ui-empty-state
         icon="mark-as-favorite"
         [horizontal]="true"
         [title]="'favorites.grid.empty-state' | translate"
         class="d-block"
+        data-cy="favorites-empty-state"
       ></c8y-ui-empty-state>
     </c8y-data-grid>
   </div>

@@ -12,6 +12,8 @@ export class FavoritesActionComponent implements OnInit {
 
   isFavorite: boolean;
 
+  isFavoriteStateInitialized: boolean;
+
   constructor(
     private favoritesManagerService: FavoritesManagerService,
     private activatedRoute: ActivatedRoute
@@ -44,5 +46,6 @@ export class FavoritesActionComponent implements OnInit {
     }
 
     this.isFavorite = await this.favoritesManagerService.getFavoriteStatus(this.contextId);
+    this.isFavoriteStateInitialized = true;
   }
 }
