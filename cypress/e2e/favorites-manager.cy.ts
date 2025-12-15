@@ -10,7 +10,7 @@ describe('Favorites Manager', () => {
     email: 'cypress-favorites-manager-user@cumulocity.com',
   } as IUser;
 
-  const assetId = '6212017203';
+  const assetId = Cypress.env('C8Y_FAVORITES_ASSET_ID') as string;
 
   // create a new user before the test suite runs, who has the necessary roles
   // and permissions to access the Cockpit application extended with the Favorites Manager module

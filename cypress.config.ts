@@ -36,6 +36,7 @@ module.exports = defineConfig({
         process.env['CYPRESS_C8Y_USERNAME'] || process.env['C8Y_USERNAME'],
       C8Y_PASSWORD:
         process.env['CYPRESS_C8Y_PASSWORD'] || process.env['C8Y_PASSWORD'],
+      C8Y_FAVORITES_ASSET_ID: process.env['C8Y_FAVORITES_ASSET_ID'],
     },
   },
 });
