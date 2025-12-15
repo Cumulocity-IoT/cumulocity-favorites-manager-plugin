@@ -14,36 +14,86 @@ Filter your favorite list to easier find your favorites you are looking for.
 
 ## Local development
 
-### Recommended version
+### Prerequisites
 
-- node v 14.x
-- npm v 6.x
+- Node.js v20.x or higher
+- npm v6.x or higher
 
 ### Plugin versions
 
-- Angular v 14.x
-- WebSDK v 1017.0.x
+- Angular v20.x
+- WebSDK v1023.12.x
 
-**How to start**
-Change the target tenant and application you want to run this plugin on in the `package.json`.
+### Configuration
 
+This project uses environment variables for configuration to keep sensitive data out of version control. Configuration is managed through a `.env` file that is not committed to the repository.
+
+**Setup:**
+
+1. Create a `.env` file in the project root directory
+2. Add the following environment variables:
+
+```bash
+# Cumulocity tenant configuration
+C8Y_TENANT=your-tenant-id
+C8Y_BASEURL=https://your-tenant.cumulocity.com
+C8Y_SHELL_TARGET=cockpit
+C8Y_USERNAME=your-username
+C8Y_PASSWORD=your-password
+
+# Cypress testing configuration
+C8Y_CYPRESS_URL=http://localhost:4200
+C8Y_FAVORITES_ASSET_ID=your-test-asset-id
 ```
-c8ycli server -u https://{{your-tenant}}.cumulocity.com/ --shell {{cockpit}}
-```
 
-Keep in mind that this plugin needs to have an app (e.g. cockpit) running with at least the same version as this plugin. if your tenant contains an older version, use the c8ycli to create a cockpit clone running with at least v 1017.0.x! Upload this clone to the target tenant (e.g. cockpit-1017) and reference this name in the --shell command.
+3. Replace the placeholder values with your actual Cumulocity tenant details
 
-The widget plugin can be locally tested via the start script:
+> **Important:** Never commit the `.env` file to version control. It should be listed in `.gitignore` to prevent accidental commits of sensitive credentials.
 
-```
+### Running the development server
+
+The plugin uses `from-env` to load environment variables from the `.env` file and inject them into the Angular development server:
+
+```bash
 npm start
 ```
 
-In the Module Federation terminology, `widget` plugin is called `remote` and the `cokpit` is called `shell`. Modules provided by this `widget` will be loaded by the `cockpit` application at the runtime. This plugin provides a basic custom widget that can be accessed through the `Add widget` menu.
+This will start the development server and automatically:
+- Connect to your configured Cumulocity tenant (`C8Y_BASEURL`)
+- Proxy the specified shell application (`C8Y_SHELL_TARGET`)
+- Make the plugin available as a remote module
 
-> Note that the `--shell` flag creates a proxy to the cockpit application and provides` AdvancedMapWidgetModule` as an `remote` via URL options.
+In Module Federation terminology, this plugin is the `remote` and the Cumulocity application (e.g., cockpit) is the `shell`. The shell will load the plugin modules at runtime.
 
-Also deploying needs no special handling and can be simply done via `npm run deploy`. As soon as the application has exports it will be uploaded as a plugin.
+Keep in mind that your tenant must have the shell application (e.g., cockpit) running with at least the same version as this plugin. If your tenant contains an older version, create an application clone with the correct version and reference it in `C8Y_SHELL_TARGET`.
+
+### Running Cypress tests
+
+Cypress tests use `dotenv` to load environment variables from the same `.env` file. The configuration is handled in [cypress.config.ts](cypress.config.ts).
+
+**Open Cypress Test Runner (interactive mode):**
+
+```bash
+npm run e2e:open
+```
+
+**Run Cypress tests (headless mode):**
+
+```bash
+npm run e2e:run
+```
+
+The tests will automatically use the credentials and configuration from your `.env` file to connect to your Cumulocity tenant.
+
+### Deployment
+
+Deploying the plugin requires no special handling:
+
+```bash
+npm run deploy
+```
+
+This will build and upload the plugin to your configured Cumulocity tenant.
 
 ---
 
