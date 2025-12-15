@@ -1,0 +1,112 @@
+import { Injectable } from '@angular/core';
+import {
+  InventoryService,
+  IResultList,
+  IManagedObject,
+  QueriesUtil,
+  QueryObjectFilterComparison,
+  QueryObjectRoot,
+} from '@c8y/client';
+import { Column, Pagination } from '@c8y/ngx-components';
+import { cloneDeep } from 'lodash';
+import { QueryFilter } from '../models/query-utils.model';
+
+export interface QueryJSON {
+  __filter: QueryObjectFilterComparison;
+
+  __orderby: { [key: string]: 1 | -1 }[];
+}
+
+export class QueryJSONRepresenation {
+  private readonly queriesUtil = new QueriesUtil();
+
+  __filter: QueryObjectFilterComparison = {};
+
+  __orderby: { [key: string]: 1 | -1 }[] = [];
+
+  constructor(baseQuery?: QueryFilter) {
+    if (baseQuery) {
+      this.__filter = cloneDeep(baseQuery);
+    }
+  }
+
+  toString(): string {
+    return this.queriesUtil.buildQuery({ __filter: this.__filter, __orderby: this.__orderby });
+  }
+
+  addFilterAttribute(attribute: object) {
+    this.__filter = { ...this.__filter, ...attribute };
+
+    return this;
+  }
+
+  addOrderBys(orderBys: { [key: string]: 1 | -1 }[]) {
+    this.__orderby.push(...orderBys);
+
+    return this;
+  }
+}
+
+@Injectable({ providedIn: 'root' })
+export class BaseInventoryDatasourceService {
+  constructor(private inventoryService: InventoryService) {}
+
+  fetchManagedObjectsForPage(
+    query: string,
+    paging: Pagination
+  ): Promise<IResultList<IManagedObject>> {
+    const filter = {
+      query,
+      ...paging,
+      withParents: true,
+      withTotalPages: false,
+    };
+    return this.inventoryService.list(filter);
+  }
+
+  fetchManagedObjectsCount(query: string): Promise<number> {
+    const filter = {
+      query,
+      pageSize: 1,
+      currentPage: 1,
+      withTotalPages: true,
+    };
+    return this.inventoryService.list(filter).then((result) => result.paging.totalPages);
+  }
+
+  createQueryJSON(columns: Column[], baseQuery: object = {}): QueryJSONRepresenation {
+    const json = new QueryJSONRepresenation(baseQuery);
+
+    for (const column of columns) {
+      this.extendQueryByColumn(json, column);
+    }
+
+    return json;
+  }
+
+  extendQueryByColumn = (json: QueryJSON, column: Column) => {
+    if (column.filterable) {
+      if (typeof column.filterPredicate === 'string' && column.path) {
+        json.__filter[column.path] = column.filterPredicate;
+      }
+
+      if (column.externalFilterQuery && column.filteringConfig) {
+        (json.__filter.__and as QueryObjectRoot[]).push(
+          column.filteringConfig.getFilter(
+            column.externalFilterQuery
+          ) as QueryObjectFilterComparison
+        );
+      }
+    }
+
+    if (column.sortOrder) {
+      const sortOrder: { [key: string]: 1 | -1 } = {
+        [column.path]: column.sortOrder === 'asc' ? 1 : -1,
+      };
+
+      json.__orderby.push(sortOrder);
+    }
+
+    return json;
+  };
+}
