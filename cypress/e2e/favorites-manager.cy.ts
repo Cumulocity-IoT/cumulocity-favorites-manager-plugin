@@ -4,13 +4,13 @@ describe('Favorites Manager', () => {
   // define a user, which should be used for the test instead
   // of technical users, which are only used for the test setup
   const testUser = {
-    userName: 'testuser',
+    userName: 'cypress-favorites-manager-user',
     password: 'ZVfJbDXuN!3t',
-    displayName: 'Test User',
-    email: 'test.user@softwareag.com',
+    displayName: 'Cypress Favorites Manager User',
+    email: 'cypress-favorites-manager-user@cumulocity.com',
   } as IUser;
 
-  const assetId = '{assetId}';
+  const assetId = Cypress.env('C8Y_FAVORITES_ASSET_ID') as string;
 
   // create a new user before the test suite runs, who has the necessary roles
   // and permissions to access the Cockpit application extended with the Favorites Manager module
@@ -23,27 +23,25 @@ describe('Favorites Manager', () => {
 
   // login with the new user before each test
   beforeEach(() => {
-    cy.getAuth(testUser.userName, testUser.password).login();
-
-    cy.hideCookieBanner();
+    cy.getAuth(testUser.userName, testUser.password as string)
+      .login()
+      .disableGainsight();
   });
 
   // delete the user after the test suite runs
   after(() => {
+    Cypress.session.clearAllSavedSessions();
+
     cy.getAuth().login().deleteUser(testUser);
   });
 
   it('should load favorites list when clicking on favorites menu item', () => {
     // open the Cockpit application extended with the Favorites Manager module locally
     // and wait for the navigator menu to be visible
-    cy.visitAndWaitForSelector(
-      '/apps/cockpit/index.html?remotes=%7B"sag-ps-iot-pkg-favorites-manager-plugin"%3A%5B"FavoritesManagerModule"%5D%7D#',
-      'en',
-      '#navigator'
-    );
+    cy.visitShellAndWaitForSelector('', 'en', '#navigator');
 
     // check for the favorites menu item and click on it
-    cy.get('#navigator [data-cy="Favorites"]')
+    cy.get('#navigator [data-cy="Favorites"]', { timeout: 60000 })
       .should('exist')
       .should('be.visible')
       .contains('Favorites')
@@ -55,9 +53,7 @@ describe('Favorites Manager', () => {
 
   it('should add a new favorite to the list and remove it again', () => {
     // open the Cockpit application extended with the Favorites Manager module and wait for the navigator menu to be visible
-    cy.visit(`/apps/cockpit/index.html#`, {
-      qs: { remotes: '{"sag-ps-iot-pkg-favorites-manager-plugin":["FavoritesManagerModule"]}' },
-    });
+    cy.visitShellAndWaitForSelector('', 'en', '#navigator');
 
     // check for the favorites menu item and click on it to navigate to the favorites list
     cy.get('#navigator [data-cy="Favorites"]', { timeout: 60000 })
@@ -73,12 +69,11 @@ describe('Favorites Manager', () => {
       .should('exist')
       .should('be.visible');
 
-    cy.visit(`/apps/cockpit/index.html#/group/${assetId}`, {
-      qs: { remotes: '{"sag-ps-iot-pkg-favorites-manager-plugin":["FavoritesManagerModule"]}' },
-    });
+    cy.visitShellAndWaitForSelector(`group/${assetId}`, 'en', '#navigator');
 
     // listen for the request to update the favorite list in the user object
     cy.intercept('PUT', '/user/currentUser').as('addFavoriteForUser');
+    cy.intercept('GET', '/user/currentUser').as('getFavoritesForUser');
 
     // check for the favorites action button its state and click on it
     // asset isn't a favorite yet and the button should contain the text "Add to favorites"
@@ -103,6 +98,8 @@ describe('Favorites Manager', () => {
       .should('be.visible')
       .contains('Favorites')
       .click();
+
+    cy.wait('@getFavoritesForUser').its('response.statusCode').should('eq', 200);
 
     cy.get('c8y-favorites-manager').should('exist').should('be.visible');
 
@@ -148,7 +145,7 @@ describe('Favorites Manager', () => {
     cy.get('c8y-favorites-manager').should('exist').should('be.visible');
 
     // expect the favorites list to be empty again for the newly created user
-    cy.get('c8y-favorites-manager [data-cy="favorites-empty-state"]')
+    cy.get('c8y-favorites-manager [data-cy="favorites-empty-state"]', { timeout: 60000 })
       .should('exist')
       .should('be.visible');
   });
