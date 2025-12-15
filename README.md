@@ -6,11 +6,11 @@ Access your favorite assets quickly by them to the your personal favorites list.
 
 **Important:** This Favorites Manager plugin will not work for users, which are managed via SSO (e.g. Azure Active Directory). The corresponding user object of these SSO users is immutable and can't be updated. File an [issue](https://github.com/SoftwareAG/cumulocity-favorites-manager-plugin/issues) if you require this plugin for SSO users.
 
-![alt manage favorites](./src/assets/favorites-manager-01.gif)
+![alt manage favorites](./src/assets/favorites-manager_01.gif)
 
 Filter your favorite list to easier find your favorites you are looking for.
 
-![alt filter favorites](./src/assets/favorites-manager-02.gif)
+![alt filter favorites](./src/assets/favorites-manager_02.gif)
 
 ## Local development
 
