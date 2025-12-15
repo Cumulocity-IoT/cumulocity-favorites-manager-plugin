@@ -10,10 +10,10 @@ env:
   C8Y_USERNAME: ${{ vars.C8Y_USERNAME }}
   C8Y_PASSWORD: ${{ secrets.C8Y_PASSWORD }}
   C8Y_BASEURL: ${{ vars.C8Y_BASEURL }}
-  C8Y_SHELL_TARGET: "cockpit"
-  C8Y_CYPRESS_URL: "http://localhost:4200"
-  C8YCTRL_PORT: 4200
-  C8YCTRL_ROOT: ./dist
+  C8Y_SHELL_TARGET: ${{ vars.C8Y_SHELL_TARGET }}
+  C8Y_CYPRESS_URL: ${{ vars.C8Y_CYPRESS_URL }}
+  C8YCTRL_PORT: ${{ vars.C8YCTRL_PORT }}
+  C8YCTRL_ROOT: ${{ vars.C8YCTRL_ROOT }}
 
 permissions:
   contents: read
