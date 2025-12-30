@@ -43,7 +43,6 @@ jobs:
         with:
           path: |
             node_modules
-            packages/*/node_modules
             /home/runner/.cache/Cypress
           key: node-modules-${{ github.sha }}
 
@@ -128,7 +127,6 @@ jobs:
         with:
           path: |
             node_modules
-            packages/*/node_modules
             /home/runner/.cache/Cypress
           key: node-modules-${{ github.sha }}
           fail-on-cache-miss: true
@@ -159,7 +157,7 @@ jobs:
           sleep 10
           echo "Server is up!"
 
-      - name: Run E2E Tests for Iceberg UI Plugin
+      - name: Run E2E Tests for Favorites Manager UI Plugin
         env:
           CYPRESS_C8Y_TENANT: ${{ env.C8Y_TENANT }}
           CYPRESS_C8Y_USERNAME: ${{ env.C8Y_USERNAME }}
@@ -167,7 +165,7 @@ jobs:
           CYPRESS_C8Y_CYPRESS_URL: ${{ env.C8Y_CYPRESS_URL }}
           CYPRESS_C8Y_SHELL_TARGET: ${{ env.C8Y_SHELL_TARGET }}
         run: |
-          echo "Running tests for Iceberg UI plugin"
+          echo "Running tests for Favorites Manager UI plugin"
           npm run e2e:run
         timeout-minutes: 10
 
@@ -180,14 +178,14 @@ jobs:
         if: failure()
         uses: actions/upload-artifact@v4
         with:
-          name: cypress-screenshots-${{ matrix.package }}
-          path: test/cypress/screenshots
+          name: cypress-screenshots
+          path: cypress/screenshots
           if-no-files-found: ignore
 
       - name: Upload Cypress videos (on failure)
         if: failure()
         uses: actions/upload-artifact@v4
         with:
-          name: cypress-videos-${{ matrix.package }}
-          path: test/cypress/videos
+          name: cypress-videos
+          path: cypress/videos
           if-no-files-found: ignore
